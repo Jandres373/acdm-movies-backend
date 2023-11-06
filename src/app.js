@@ -1,7 +1,7 @@
 const express = require('express');
+const router = require('./routes');
 const helmet = require('helmet');
 const cors = require('cors');
-const router = require('./routes');
 const errorHandler = require('./utils/errorHandler');
 require('dotenv').config();
 
