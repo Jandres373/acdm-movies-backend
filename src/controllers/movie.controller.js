@@ -3,8 +3,9 @@ const Movie = require("../models/movie.model");
 const Genre = require("../models/genre.model");
 const Actor = require("../models/actor.model");
 const Director = require("../models/director.model");
+const { uploadToCloudinary } = require("../utils/cloudinary");
 
-const getAll = catchError(async (req, res) => {
+const getAll = catchError(async (_, res) => {
   const results = await Movie.findAll({ include: [Genre, Actor, Director] });
   return res.json(results);
 });
@@ -67,6 +68,13 @@ const setMovieActors = catchError(async (req, res) => {
   return res.json(response);
 });
 
+const updateImage = catchError(async (req,res)=>{
+  const {path,filename} = req.file;
+  if (!req.file) return res.status(400).json({message: "no image provided"})
+  const {url} =await uploadToCloudinary(path, filename)
+  res.status(201).json({url})
+})
+
 module.exports = {
   getAll,
   create,
@@ -76,4 +84,5 @@ module.exports = {
   setMovieGenres,
   setMovieDirectors,
   setMovieActors,
+  updateImage,
 };

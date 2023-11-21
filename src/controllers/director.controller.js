@@ -4,7 +4,7 @@ const Movie = require("../models/movie.model");
 
 const getAll = catchError(async (req, res) => {
   const results = await Director.findAll({ include: [Movie] });
-  return res.json(results);
+  return res.status(200).json(results);
 });
 
 const create = catchError(async (req, res) => {
